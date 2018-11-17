@@ -1,0 +1,28 @@
+clear all
+Vp=.5:.1:1;
+Vn=0.1:0.05:0.3;
+P=0.1:.1:1;
+Q=0.1:.1:1;
+
+for i=1:6
+    for j=1:5
+        iBPSC(i,j)=1/Vp(i);
+        iICPS(i,j)=1/(Vp(i)-Vn(j));
+        V2(i,j)=Vp(i)+Vn(j);
+        V1(i,j)=Vp(i)-Vn(j);
+        iPNSC(i,j)=sqrt(V2(i,j)^2/2+V1(i,j)^2/2)/(Vp(i)^2-Vn(j)^2);
+    end
+end
+
+figure
+surf(Vn,Vp,iBPSC)
+hold on
+surf(Vn,Vp,iICPS)
+hold on
+surf(Vn,Vp,iPNSC)
+% ylabel('Positive sequence Voltage Magnitude (p.u.)')
+ylim([0.5 1])
+xlim([0.1 .3])
+% xlabel('Negative sequence Voltage Magnitude (p.u.)')
+title('S=1 p.u.')
+grid on
